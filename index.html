@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fronteando Ando</title>
+  <meta name="description" content="Guía de frontend desde cero: HTML, CSS, JavaScript y React, basada en las Unidades 4 y 5 de Desarrollo de Software." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    // Aplicar tema guardado antes de pintar, para evitar parpadeo
+    try { const t = localStorage.getItem('fa-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#lesson">Saltar al contenido</a>
+
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+    </button>
+    <a class="brand" href="#/">Fronteando<span class="brand-mark">Ando</span></a>
+    <div class="progress" aria-label="Progreso">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">0 de 0</span>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema claro u oscuro">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    </button>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Índice de lecciones">
+      <label class="search">
+        <span class="sr-only">Buscar lección</span>
+        <input type="search" id="search" placeholder="Buscar tema… (ej: flexbox, props)" autocomplete="off" />
+      </label>
+      <div id="toc"></div>
+    </nav>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <main id="lesson" tabindex="-1"></main>
+  </div>
+
+  <script src="js/content/_helpers.js"></script>
+  <script src="js/content/01-web.js"></script>
+  <script src="js/content/02-html.js"></script>
+  <script src="js/content/03-css.js"></script>
+  <script src="js/content/04a-js.js"></script>
+  <script src="js/content/04b-js.js"></script>
+  <script src="js/content/05-tooling.js"></script>
+  <script src="js/content/06a-react.js"></script>
+  <script src="js/content/06b-react.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
