@@ -44,6 +44,7 @@
     }
     return out + esc(code.slice(last));
   }
+  window.GUIDE.highlight = highlight;
 
   // Bloques de código: resaltado + botón copiar
   function enhanceCode(root) {
@@ -67,7 +68,9 @@
   // ---------- Índice ----------
   function renderToc(filter = '') {
     const q = filter.trim().toLowerCase();
-    let html = '';
+    let html = q ? '' : `<section class="toc-module"><h2>Práctica</h2><ol>
+      <li><a class="toc-link" href="#/simulacro" data-id="simulacro"><span class="n">✓</span><span>Simulacro de parcial</span></a></li>
+      <li><a class="toc-link" href="#/proyectos" data-id="proyectos"><span class="n">★</span><span>Proyectos</span></a></li></ol></section>`;
     let n = 0;
     for (const mod of MODULES) {
       const items = LESSONS.map((l, i) => ({ l, i })).filter(({ l }) => l.module === mod.id);
@@ -101,11 +104,16 @@
   // ---------- Rutas ----------
   const currentId = () => location.hash.replace(/^#\/?/, '');
 
-  function route() {
+  let firstLoad = true;
+  async function route() {
     const id = currentId();
     const idx = LESSONS.findIndex((l) => l.id === id);
-    if (idx === -1) renderHome();
-    else renderLesson(idx);
+    // Al cambiar de tema se muestra una animación de entrada (en la primera carga solo se registra)
+    if (idx !== -1) { await FX.intro(id, firstLoad); if (currentId() !== id) return; }
+    firstLoad = false;
+    FX.cleanup();
+    if (idx !== -1) renderLesson(idx);
+    else if (!FX.render(id)) renderHome();
     markCurrent();
     closeMenu();
     window.scrollTo(0, 0);
@@ -129,8 +137,10 @@
         <p class="lede">Del “¿qué pasa cuando escribo una URL?” hasta una app en React con rutas privadas. ${LESSONS.length} lecciones con la teoría desarrollada, ${nLabs} laboratorios donde editás código y ves el resultado al instante, y ${nEx} ejercicios con solución, incluidos todos los de la cátedra.</p>
         <a class="start-btn" href="#/${resume.id}">${done.size ? 'Seguir con' : 'Empezar con'} “${resume.title}”</a>
         <div class="stack">${cards}</div>
+        <div id="fxHome"></div>
         <div class="note"><p><strong>Cómo usar la guía.</strong> Avanzá en orden: cada tema usa lo anterior. Leé la teoría, tocá los laboratorios y recién después intentá los ejercicios sin mirar la solución. Marcá cada lección como completada para ver tu progreso. Moverte entre lecciones: <kbd>←</kbd> <kbd>→</kbd>.</p></div>
       </article>`;
+    $('#fxHome').append(FX.homeExtras());
   }
 
   function renderSources(l) {
@@ -192,12 +202,15 @@
 
     main.innerHTML = `
       <article class="lesson">
+        <div class="fx lesson-glyph" id="fxGlyph" aria-hidden="true"></div>
         <p class="crumb">Lección ${idx + 1} de ${LESSONS.length}, ${mod.title}</p>
         <h1>${l.title}</h1>
         <p class="tldr">${l.tldr}</p>
         ${l.goals ? `<div class="goals"><p>Al terminar vas a poder:</p><ul>${l.goals.map((g) => `<li>${g}</li>`).join('')}</ul></div>` : ''}
         <div class="body">${l.body}${rest}</div>
+        <section id="fxLabs"></section>
         ${exercises ? `<section class="practice"><h2>Ejercicios</h2><p>Intentalos antes de abrir la solución. Equivocarse acá es gratis.</p>${exercises}</section>` : ''}
+        <section id="fxQuiz" class="practice"></section>
         ${sources ? `<section class="sources"><h2>Bibliografía</h2><p>Resumen de cada fuente oficial. Abrí la que quieras profundizar.</p>${sources}</section>` : ''}
         <div class="done-row">
           <button class="done-btn" id="doneBtn" aria-pressed="${done.has(l.id)}">${done.has(l.id) ? 'Completada' : 'Marcar como completada'}</button>
@@ -219,6 +232,7 @@
       mountLab(btn.nextElementSibling, { title: 'solución', ...ex.solution.run });
       btn.remove();
     }));
+    FX.mountLesson(l.id, main);
 
     $('#doneBtn').addEventListener('click', (e) => {
       done.has(l.id) ? done.delete(l.id) : done.add(l.id);
@@ -370,6 +384,7 @@
   document.addEventListener('keydown', (e) => {
     if (e.target.closest('input, textarea, select') || e.altKey || e.ctrlKey || e.metaKey) return;
     const idx = LESSONS.findIndex((l) => l.id === currentId());
+    if (idx === -1 && currentId()) return; // en simulacro/proyectos las flechas son del quiz
     if (e.key === 'ArrowRight' && idx < LESSONS.length - 1) location.hash = `#/${LESSONS[idx + 1].id}`;
     if (e.key === 'ArrowLeft' && idx > 0) location.hash = `#/${LESSONS[idx - 1].id}`;
     if (e.key === 'Escape') closeMenu();
