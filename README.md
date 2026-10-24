@@ -24,6 +24,7 @@ El banco y los proyectos están en `js/practica-datos.js`; el motor en `js/pract
 - [Iterando Ando](https://franco704.github.io/iterando-ando/) ([repositorio](https://github.com/Franco704/iterando-ando))
 - [Economizar](https://franco704.github.io/economizar/) ([repositorio](https://github.com/Franco704/economizar))
 - [Modulando Ando](https://franco704.github.io/modulando-ando/) ([repositorio](https://github.com/Franco704/modulando-ando))
+- [Probando Ando](https://franco704.github.io/probando-ando/) ([repositorio](https://github.com/Franco704/probando-ando))
 
 ## Agradecimientos
 

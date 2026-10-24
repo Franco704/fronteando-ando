@@ -9,6 +9,7 @@
     ['Iterando Ando', 'Matemática Superior (Laplace, métodos numéricos, Fourier)', 'iterando-ando'],
     ['Economizar', 'Economía (micro y macro con gráficas)', 'economizar'],
     ['Modulando Ando', 'Comunicación de Datos (señales, Shannon, errores, modulación)', 'modulando-ando'],
+    ['Probando Ando', 'Probabilidad y Estadística (Bayes, distribuciones, intervalos, tests)', 'probando-ando'],
   ];
   const main = $('#lesson');
   const toc = $('#toc');
