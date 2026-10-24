@@ -17,6 +17,14 @@ Además, integrado del "Laboratorio Frontend DSW":
 
 El banco y los proyectos están en `js/practica-datos.js`; el motor en `js/practica.js` y sus estilos en `css/practica.css`.
 
+## También probá
+
+- [Backeando Ando](https://franco704.github.io/backeando-ando/) ([repositorio](https://github.com/Franco704/backeando-ando))
+- [Diseñando Ando](https://franco704.github.io/disenando-ando/) ([repositorio](https://github.com/Franco704/disenando-ando))
+- [Iterando Ando](https://franco704.github.io/iterando-ando/) ([repositorio](https://github.com/Franco704/iterando-ando))
+- [Economizar](https://franco704.github.io/economizar/) ([repositorio](https://github.com/Franco704/economizar))
+- [Modulando Ando](https://franco704.github.io/modulando-ando/) ([repositorio](https://github.com/Franco704/modulando-ando))
+
 ## Agradecimientos
 
 Agradecimientos a **Mateo Rusconi**, autor del "Laboratorio Frontend DSW", de donde vienen los laboratorios visuales, el banco de preguntas, el simulacro, los proyectos, la consola y las animaciones que se sumaron a esta guía.

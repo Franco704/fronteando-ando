@@ -2,6 +2,14 @@
 (() => {
   const { MODULES, LESSONS } = window.GUIDE;
   const $ = (s, el = document) => el.querySelector(s);
+  // Guías hermanas: página publicada y repositorio de cada una
+  const SIBLINGS = [
+    ['Backeando Ando', 'Desarrollo de software backend (C#, ASP.NET, EF Core)', 'backeando-ando'],
+    ['Diseñando Ando', 'Diseño de Sistemas de Información (UML, GRASP, GoF)', 'disenando-ando'],
+    ['Iterando Ando', 'Matemática Superior (Laplace, métodos numéricos, Fourier)', 'iterando-ando'],
+    ['Economizar', 'Economía (micro y macro con gráficas)', 'economizar'],
+    ['Modulando Ando', 'Comunicación de Datos (señales, Shannon, errores, modulación)', 'modulando-ando'],
+  ];
   const main = $('#lesson');
   const toc = $('#toc');
   const sidebar = $('#sidebar');
@@ -135,12 +143,17 @@
         <p class="crumb">Desarrollo de Software, Unidades 4 y 5</p>
         <h1>Frontend desde cero, una lección a la vez.</h1>
         <p class="lede">Del “¿qué pasa cuando escribo una URL?” hasta una app en React con rutas privadas. ${LESSONS.length} lecciones con la teoría desarrollada, ${nLabs} laboratorios donde editás código y ves el resultado al instante, y ${nEx} ejercicios con solución, incluidos todos los de la cátedra.</p>
-        <a class="start-btn" href="#/${resume.id}">${done.size ? 'Seguir con' : 'Empezar con'} “${resume.title}”</a>
+        <a class="start-btn" href="#/${resume.id}">${done.size ? 'Seguir con' : 'Empezar con'} “${resume.title}”</a><button class="also-btn" type="button" data-act="also">También probá…</button>
         <div class="stack">${cards}</div>
         <div id="fxHome"></div>
+        <section class="home-links">
+          <h2 class="also-h" id="tambien">También probá:</h2>
+          <ul class="also">${SIBLINGS.map(([n, d, slug]) => `<li><a class="also-main" href="https://franco704.github.io/${slug}/" target="_blank" rel="noopener"><b>${n}</b><span>${d}</span></a><a class="also-repo" href="https://github.com/Franco704/${slug}" target="_blank" rel="noopener" aria-label="Repositorio de ${n}">repositorio</a></li>`).join('')}</ul>
+        </section>
         <div class="note"><p><strong>Cómo usar la guía.</strong> Avanzá en orden: cada tema usa lo anterior. Leé la teoría, tocá los laboratorios y recién después intentá los ejercicios sin mirar la solución. Marcá cada lección como completada para ver tu progreso. Moverte entre lecciones: <kbd>←</kbd> <kbd>→</kbd>.</p></div>
       </article>`;
     $('#fxHome').append(FX.homeExtras());
+    $('[data-act="also"]', main).addEventListener('click', () => $('#tambien').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
   }
 
   function renderSources(l) {

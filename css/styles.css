@@ -409,3 +409,17 @@ pre.code:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
 .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 18px 0; }
 .flow span { padding: 8px 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); font-size: 0.92rem; }
 .flow i { font-style: normal; color: var(--ink-soft); }
+
+/* ============ Portada: guías hermanas ============ */
+.home-links { margin: 40px 0; }
+.also-h { font-family: var(--f-head); font-size: var(--step-2); margin: 0 0 12px; }
+.also { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.also li { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface); overflow: hidden; }
+.also li:hover { background: var(--paper-2); }
+.also-main { display: grid; gap: 4px; padding: 16px 18px 10px; text-decoration: none; color: var(--ink); flex: 1; }
+.also-main b { font-family: var(--f-head); font-size: 1.1rem; }
+.also-main span { font-size: var(--step--1); color: var(--ink-soft); }
+.also-repo { padding: 8px 18px 12px; font: 600 .8rem var(--f-mono); color: var(--accent); text-decoration: none; border-top: 1px dashed var(--line); }
+.also-repo:hover { text-decoration: underline; }
+.also-btn { display: inline-block; margin: 8px 0 0 10px; padding: 14px 20px; border-radius: 12px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 700 1.05rem var(--f-head); cursor: pointer; }
+.also-btn:hover { border-color: var(--accent); color: var(--accent); }
