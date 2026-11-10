@@ -5,7 +5,7 @@
 :root[data-theme="dark"] { --bad: #ff7d74; --val: #c4a8f5; color-scheme: dark; }
 :root[data-theme="light"] { color-scheme: light; }
 [hidden] { display: none !important; }
-.exam-on .con-fab { display: none; }
+body.exam-on .con-fab { display: none; } /* body: gana sobre .fx .con-fab, que tiene la misma especificidad y va después */
 .fx {
   --panel: var(--surface); --panel-2: var(--paper-2); --muted: var(--ink-soft);
   --tag: var(--accent); --tag-soft: var(--accent-soft); --on-tag: var(--paper); --attr: var(--warn);

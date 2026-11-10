@@ -11,6 +11,8 @@ Además, integrado del "Laboratorio Frontend DSW":
 - 37 laboratorios visuales (event loop paso a paso, métodos de array, especificidad, flexbox, Virtual DOM, ciclo de vida con React real, router con rutas privadas…) dentro de cada lección.
 - Trampas de parcial por tema y un mini-quiz al final de cada lección.
 - Simulacro (`#/simulacro`): 40 rápidas o 10 de código con tiempo, sorteadas de un banco de 476 preguntas, con revisión y repaso de errores.
+- Modelos de parcial (`#/parciales`): 5 exámenes fijos con el estilo del profesor (multiple choice conceptual + algunas de código), incluido el 2do parcial reconstruido. Datos en `js/parciales-datos.js`; sus preguntas también se suman al banco del simulacro.
+- Resumen para el parcial (`#/resumen`): fichas con los conceptos clave de cada tema (`js/content/resumen.js`).
 - Proyectos (`#/proyectos`) con requisitos para tildar y pruebas de fuego.
 - Consola JS y playground de React (botón "> Consola").
 - Animaciones: una pantalla de entrada con la trampa típica cada vez que cambiás de tema, y un dibujo animado del tema en la cabecera de cada lección.

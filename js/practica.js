@@ -52,7 +52,7 @@ function view() {
   mainEl.replaceChildren(h('article', { class: 'lesson wide' }, v));
   return v;
 }
-function cleanup() { document.body.classList.remove('exam-on'); ReactRoots.splice(0).forEach(r => { try { r.unmount(); } catch (e) {} }); }
+function cleanup() { if (activeModel) { activeModel.onExit = null; activeModel.exit(); activeModel = null; } document.body.classList.remove('exam-on'); ReactRoots.splice(0).forEach(r => { try { r.unmount(); } catch (e) {} }); }
 
 /* ───────── helpers ───────── */
 const $ = (s, r = document) => r.querySelector(s);
@@ -1623,7 +1623,7 @@ const Konsole = (() => {
 })();
 
 /* ───────── quiz engine ───────── */
-let activeExam = null, lastFinished = null;
+let activeExam = null, lastFinished = null, activeModel = null;
 class Quiz {
   constructor(root, o) { Object.assign(this, { root, mode: 'practice', timeMin: 0, title: '', inline: false, onExit: null }, o); this.i = 0; this.ans = {}; this.opts = {}; this.locked = {}; this.list.forEach(q => this.opts[q.id] = shuffle(q.o)); this.t0 = Date.now(); this.finished = false; this.key = this.key.bind(this); }
   start() {
@@ -1910,6 +1910,9 @@ function homeExtras() {
     h('div', { class: 'sec-h' }, h('h2', {}, 'Practicá como en el parcial')),
     h('div', { class: 'howto' },
       [['#/simulacro', 'Simulacro con tiempo', `40 rápidas o 10 de código, sorteadas de ${QUESTIONS.length} preguntas. Al entregar, revisás cada una con su explicación.`],
+       ['#/parciales', 'Modelos de parcial', 'Exámenes completos con el formato del profesor, incluido el 2do parcial reconstruido.'],
+       ['#/resumen', 'Resumen para el parcial', 'Los conceptos que tenés que saber sí o sí, en una sola página.'],
+       ['#/conceptual', 'Resumen conceptual', 'La teoría de las Unidades IV y V para leer de corrido.'],
        ['#/proyectos', 'Proyectos', 'Del turnero en vanilla al panel admin en React, con requisitos para tildar y pruebas de fuego.'],
        [null, 'Consola JS y React', 'Abrila desde el botón “> Consola” (abajo a la derecha) para probar código suelto o un componente.']]
         .map(([href, t, d]) => h(href ? 'a' : 'div', { href, style: { textDecoration: 'none', color: 'inherit' } }, h('h3', {}, t), h('p', {}, d)))),
@@ -1944,7 +1947,7 @@ function simView() {
   v.append(h('div', { class: 'row', style: { marginTop: '14px' } }, h('button', { class: 'btn', disabled: !wr.length, onclick: () => startPractice(shuffle(wr), 'Repaso de errores') }, `Repasar mis errores (${wr.length})`), h('button', { class: 'btn', onclick: () => startPractice(shuffle(QUESTIONS.filter(q => q.d === 'd' && tp.includes(q.t))), 'Todas las de código') }, `Todas las de código (${nD})`)));
   if (DB.hist.length) {
     v.append(h('div', { class: 'sec-h' }, h('h2', {}, 'Tus últimos simulacros')));
-    v.append(h('div', { class: 'tbl' }, h('table', {}, h('thead', {}, h('tr', {}, h('th', {}, 'Fecha'), h('th', {}, 'Formato'), h('th', {}, 'Resultado'), h('th', {}, 'Tiempo'))), h('tbody', {}, DB.hist.map(x => h('tr', {}, h('td', {}, new Date(x.d).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })), h('td', {}, (x.k === '40' ? '40 rápidas' : '10 difíciles') + (x.u ? ' · ' + ({ both: 'IV+V', '4': 'IV', '5': 'V' })[x.u] : '')), h('td', { class: 'mono' }, `${x.ok}/${x.n} · ${Math.round(x.ok / x.n * 100)}%`), h('td', { class: 'mono' }, `${Math.floor(x.s / 60)}:${String(x.s % 60).padStart(2, '0')}`)))))));
+    v.append(h('div', { class: 'tbl' }, h('table', {}, h('thead', {}, h('tr', {}, h('th', {}, 'Fecha'), h('th', {}, 'Formato'), h('th', {}, 'Resultado'), h('th', {}, 'Tiempo'))), h('tbody', {}, DB.hist.map(x => h('tr', {}, h('td', {}, new Date(x.d).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })), h('td', {}, (x.k === '40' ? '40 rápidas' : x.k === '10' ? '10 difíciles' : x.k) + (x.u ? ' · ' + ({ both: 'IV+V', '4': 'IV', '5': 'V' })[x.u] : '')), h('td', { class: 'mono' }, `${x.ok}/${x.n} · ${Math.round(x.ok / x.n * 100)}%`), h('td', { class: 'mono' }, `${Math.floor(x.s / 60)}:${String(x.s % 60).padStart(2, '0')}`)))))));
   }
 }
 
@@ -1965,7 +1968,35 @@ function projView() {
   })));
 }
 
-const VIEWS = { simulacro: ['Simulacro', simView], proyectos: ['Proyectos', projView] };
+// Modelos de parcial: exámenes fijos (js/parciales-datos.js) con el mismo motor del simulacro
+function modelView() {
+  const v = view();
+  const { MODELOS } = window.PARCIALES;
+  v.append(h('div', { class: 'sec-h', style: { marginTop: 0 } }, h('h1', { style: { fontSize: 'var(--step-4)', fontWeight: 800 } }, 'Modelos de parcial'), h('span', { class: 'muted' }, 'Multiple choice conceptual, con algunas de código')));
+  v.append(h('p', { style: { marginBottom: '18px', maxWidth: '72ch' } }, 'Exámenes armados con el estilo del profesor: enunciados largos y teóricos, cuatro opciones parecidas y alguna pregunta de leer código. Rendilos con tiempo y sin ver las respuestas, o practicalos con la explicación después de cada pregunta. Antes de rendir, repasá el ', h('a', { href: '#/resumen' }, 'resumen para el parcial'), '.'));
+  v.append(h('div', { class: 'mode-cards' }, MODELOS.map(m => {
+    const nD = m.qs.filter(q => q.d === 'd').length;
+    const last = DB.hist.find(x => x.k === m.name);
+    return h('div', { class: 'mode' },
+      h('h2', {}, h('span', { class: 'n' }, m.qs.length), ' ' + m.name),
+      h('p', {}, m.desc),
+      h('p', { class: 'muted', style: { fontSize: '14px' } }, `${m.qs.length - nD} conceptuales · ${nD} de código · ${m.min} min` + (last ? ` · último intento: ${last.ok}/${last.n}` : '')),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn primary', onclick: () => startModel(m) }, 'Rendir con tiempo'),
+        h('button', { class: 'btn', onclick: () => startPractice(m.qs, 'Práctica: ' + m.name, null, 'parciales') }, 'Practicar con explicación')));
+  })));
+}
+function startModel(m) {
+  const v = view();
+  const box = h('div'); v.append(box);
+  // El orden de las preguntas se mantiene como en el examen; las opciones se mezclan solas
+  activeModel = new Quiz(box, { list: m.qs, mode: 'exam', timeMin: m.min, kind: m.name, back: 'parciales', onExit: () => { activeModel = null; go('parciales'); } });
+  document.body.classList.add('exam-on');
+  activeModel.start();
+  window.scrollTo(0, 0);
+}
+
+const VIEWS = { simulacro: ['Simulacro', simView], proyectos: ['Proyectos', projView], parciales: ['Modelos de parcial', modelView] };
 // Dibuja una vista propia (#/simulacro, #/proyectos); devuelve false si la ruta no es nuestra
 function render(id) {
   const v = VIEWS[id];

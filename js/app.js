@@ -78,6 +78,9 @@
   function renderToc(filter = '') {
     const q = filter.trim().toLowerCase();
     let html = q ? '' : `<section class="toc-module"><h2>Práctica</h2><ol>
+      <li><a class="toc-link" href="#/resumen" data-id="resumen"><span class="n">≡</span><span>Resumen para el parcial</span></a></li>
+      <li><a class="toc-link" href="#/conceptual" data-id="conceptual"><span class="n">¶</span><span>Resumen conceptual</span></a></li>
+      <li><a class="toc-link" href="#/parciales" data-id="parciales"><span class="n">✎</span><span>Modelos de parcial</span></a></li>
       <li><a class="toc-link" href="#/simulacro" data-id="simulacro"><span class="n">✓</span><span>Simulacro de parcial</span></a></li>
       <li><a class="toc-link" href="#/proyectos" data-id="proyectos"><span class="n">★</span><span>Proyectos</span></a></li></ol></section>`;
     let n = 0;
@@ -122,6 +125,8 @@
     firstLoad = false;
     FX.cleanup();
     if (idx !== -1) renderLesson(idx);
+    else if (id === 'resumen') renderResumen();
+    else if (id === 'conceptual') renderResumen(CONCEPTUAL_PAGE);
     else if (!FX.render(id)) renderHome();
     markCurrent();
     closeMenu();
@@ -155,6 +160,41 @@
       </article>`;
     $('#fxHome').append(FX.homeExtras());
     $('[data-act="also"]', main).addEventListener('click', () => $('#tambien').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+  }
+
+  // Resumen para el parcial (js/content/resumen.js) y Resumen conceptual (js/content/conceptual.js)
+  const RESUMEN_PAGE = {
+    route: 'resumen', prefix: 'r', title: 'Resumen para el parcial', units: () => window.GUIDE.RESUMEN,
+    tldr: 'Lo que tenés que saber sí o sí, tema por tema. El parcial es multiple choice conceptual: las opciones se parecen mucho, así que fijate en las diferencias de estas tablas. Si preferís leerlo de corrido, está el <a href="#/conceptual">resumen conceptual</a>. Después probá con los <a href="#/parciales">modelos de parcial</a>.',
+  };
+  const CONCEPTUAL_PAGE = {
+    route: 'conceptual', prefix: 'c', title: 'Resumen conceptual', units: () => window.GUIDE.CONCEPTUAL,
+    tldr: 'La teoría de las Unidades IV y V para leer de corrido antes del parcial. Los temas marcados con “salió en el parcial” fueron preguntas del 2do parcial real. Para las tablas comparativas, mirá el <a href="#/resumen">resumen para el parcial</a>.',
+  };
+  function renderResumen(page = RESUMEN_PAGE) {
+    document.title = `${page.title} · Fronteando Ando`;
+    const units = page.units();
+    const all = units.flatMap((u) => u.items);
+    main.innerHTML = `
+      <article class="lesson resumen">
+        <p class="crumb">Práctica</p>
+        <h1>${page.title}</h1>
+        <p class="tldr">${page.tldr}</p>
+        <nav class="sum-index" aria-label="Temas del resumen">${all.map((it) => `<a href="#/${page.route}" data-to="${page.prefix}-${it.id}">${it.title}</a>`).join('')}</nav>
+        ${units.map((u) => `<h2>${u.unit}</h2><div class="sum-grid">${u.items.map((it) => `
+          <section class="sum-card" id="${page.prefix}-${it.id}">
+            <h3>${it.title}</h3>
+            ${it.html}
+            <a class="sum-more" href="#/${it.lesson}">Repasar la lección</a>
+          </section>`).join('')}</div>`).join('')}
+        <div class="done-row"><a class="start-btn" href="#/parciales">Probar un modelo de parcial</a></div>
+      </article>`;
+    enhanceCode(main);
+    // Saltos internos sin tocar el hash (el hash es la ruta)
+    main.querySelectorAll('[data-to]').forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById(a.dataset.to).scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }));
   }
 
   function renderSources(l) {

@@ -423,3 +423,21 @@ pre.code:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
 .also-repo:hover { text-decoration: underline; }
 .also-btn { display: inline-block; margin: 8px 0 0 10px; padding: 14px 20px; border-radius: 12px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 700 1.05rem var(--f-head); cursor: pointer; }
 .also-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ============ Resumen para el parcial ============ */
+.sum-index { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+.sum-index a {
+  font-size: var(--step--1); padding: 4px 12px; border-radius: 999px; text-decoration: none;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+}
+.sum-index a:hover { border-color: var(--accent); color: var(--accent); }
+.sum-grid { display: grid; gap: 16px; }
+.sum-card {
+  min-width: 0; padding: 4px 20px 18px; border-radius: var(--radius-m);
+  background: var(--surface); border: 1px solid var(--line); scroll-margin-top: calc(var(--topbar-h) + 16px);
+}
+.sum-card h3 { margin-top: 16px; }
+.sum-card p, .sum-card li { max-width: none; }
+.sum-card .note { margin: 14px 0; }
+.sum-more { display: inline-block; margin-top: 6px; font-size: var(--step--1); }
+.sum-more::after { content: " →"; }
