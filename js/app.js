@@ -80,6 +80,7 @@
     let html = q ? '' : `<section class="toc-module"><h2>Práctica</h2><ol>
       <li><a class="toc-link" href="#/resumen" data-id="resumen"><span class="n">≡</span><span>Resumen para el parcial</span></a></li>
       <li><a class="toc-link" href="#/conceptual" data-id="conceptual"><span class="n">¶</span><span>Resumen conceptual</span></a></li>
+      <li><a class="toc-link" href="#/videos" data-id="videos"><span class="n">▶</span><span>Videos de resumen</span></a></li>
       <li><a class="toc-link" href="#/parciales" data-id="parciales"><span class="n">✎</span><span>Modelos de parcial</span></a></li>
       <li><a class="toc-link" href="#/simulacro" data-id="simulacro"><span class="n">✓</span><span>Simulacro de parcial</span></a></li>
       <li><a class="toc-link" href="#/proyectos" data-id="proyectos"><span class="n">★</span><span>Proyectos</span></a></li></ol></section>`;
@@ -115,6 +116,8 @@
 
   // ---------- Rutas ----------
   const currentId = () => location.hash.replace(/^#\/?/, '');
+  // Video de cada lección: videos/NN-<id>.mp4, numerado según el orden de LESSONS
+  const videoSrc = (i) => `videos/${String(i + 1).padStart(2, '0')}-${LESSONS[i].id}.mp4`;
 
   let firstLoad = true;
   async function route() {
@@ -127,6 +130,7 @@
     if (idx !== -1) renderLesson(idx);
     else if (id === 'resumen') renderResumen();
     else if (id === 'conceptual') renderResumen(CONCEPTUAL_PAGE);
+    else if (id === 'videos' || id.startsWith('videos/')) renderVideos(LESSONS.findIndex((l) => l.id === id.slice(7)));
     else if (!FX.render(id)) renderHome();
     markCurrent();
     closeMenu();
@@ -197,6 +201,37 @@
     }));
   }
 
+  // Videos de resumen (#/videos o #/videos/<lección>): todos de corrido, con salto a cada lección
+  function renderVideos(start) {
+    let cur = Math.max(start, 0);
+    document.title = 'Videos de resumen · Fronteando Ando';
+    main.innerHTML = `
+      <article class="lesson videos">
+        <p class="crumb">Práctica</p>
+        <h1>Videos de resumen</h1>
+        <p class="tldr">Un video corto por lección. Se reproducen de corrido: cuando termina uno arranca el siguiente. Si algo no te cierra, abrí la lección de la que habla.</p>
+        <div class="vid-player">
+          <video controls playsinline preload="metadata"></video>
+          <p class="vid-now"><span></span><a class="sum-more" href="#/">Ir a la lección</a></p>
+        </div>
+        <label class="vid-auto"><input type="checkbox" checked /> Reproducir el siguiente automáticamente</label>
+        <ol class="vid-list">${LESSONS.map((l, i) => `<li><button type="button" data-i="${i}"><span class="n">${String(i + 1).padStart(2, '0')}</span>${l.title}</button><a href="#/${l.id}">lección</a></li>`).join('')}</ol>
+      </article>`;
+    const video = $('video', main);
+    const btns = [...main.querySelectorAll('.vid-list button')];
+    const play = (i, auto) => {
+      cur = i;
+      video.src = videoSrc(i);
+      if (auto) video.play().catch(() => {});
+      $('.vid-now span', main).textContent = `${String(i + 1).padStart(2, '0')}. ${LESSONS[i].title}`;
+      $('.vid-now a', main).href = `#/${LESSONS[i].id}`;
+      btns.forEach((b, j) => b.toggleAttribute('aria-current', j === i));
+    };
+    btns.forEach((b) => b.addEventListener('click', () => { play(+b.dataset.i, true); video.scrollIntoView({ block: 'nearest' }); }));
+    video.addEventListener('ended', () => { if ($('.vid-auto input', main).checked && cur < LESSONS.length - 1) play(cur + 1, true); });
+    play(cur, false);
+  }
+
   function renderSources(l) {
     return (l.sources || []).map((s) => `
       <details class="source">
@@ -260,6 +295,9 @@
         <p class="crumb">Lección ${idx + 1} de ${LESSONS.length}, ${mod.title}</p>
         <h1>${l.title}</h1>
         <p class="tldr">${l.tldr}</p>
+        <details class="lesson-video"><summary>Ver el video resumen de esta lección</summary>
+          <video controls playsinline preload="none" src="${videoSrc(idx)}"></video>
+          <a class="sum-more" href="#/videos/${l.id}">Ver todos los videos de corrido desde acá</a></details>
         ${l.goals ? `<div class="goals"><p>Al terminar vas a poder:</p><ul>${l.goals.map((g) => `<li>${g}</li>`).join('')}</ul></div>` : ''}
         <div class="body">${l.body}${rest}</div>
         <section id="fxLabs"></section>

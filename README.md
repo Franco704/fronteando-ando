@@ -13,6 +13,7 @@ Además, integrado del "Laboratorio Frontend DSW":
 - Simulacro (`#/simulacro`): 40 rápidas o 10 de código con tiempo, sorteadas de un banco de 476 preguntas, con revisión y repaso de errores.
 - Modelos de parcial (`#/parciales`): 5 exámenes fijos con el estilo del profesor (multiple choice conceptual + algunas de código), incluido el 2do parcial reconstruido. Datos en `js/parciales-datos.js`; sus preguntas también se suman al banco del simulacro.
 - Resumen para el parcial (`#/resumen`): fichas con los conceptos clave de cada tema (`js/content/resumen.js`).
+- Videos de resumen (`#/videos`): un video por lección (`videos/NN-<id>.mp4`), de corrido y con salto a cada lección; cada lección también tiene el suyo arriba.
 - Proyectos (`#/proyectos`) con requisitos para tildar y pruebas de fuego.
 - Consola JS y playground de React (botón "> Consola").
 - Animaciones: una pantalla de entrada con la trampa típica cada vez que cambiás de tema, y un dibujo animado del tema en la cabecera de cada lección.

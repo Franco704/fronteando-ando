@@ -441,3 +441,25 @@ pre.code:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
 .sum-card .note { margin: 14px 0; }
 .sum-more { display: inline-block; margin-top: 6px; font-size: var(--step--1); }
 .sum-more::after { content: " →"; }
+
+/* ============ Videos de resumen ============ */
+.vid-player video, .lesson-video video {
+  display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius-m);
+}
+.vid-player { position: sticky; top: calc(var(--topbar-h) + 8px); z-index: 1; background: var(--paper); padding-bottom: 4px; }
+.vid-now { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-weight: 700; margin: 10px 0; }
+.vid-auto { display: inline-flex; gap: 8px; align-items: center; font-size: var(--step--1); color: var(--ink-soft); margin-bottom: 12px; }
+.vid-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.vid-list li { display: flex; align-items: center; gap: 8px; }
+.vid-list button {
+  flex: 1; min-width: 0; display: flex; gap: 10px; text-align: left; font: inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 8px 12px; cursor: pointer;
+}
+.vid-list button:hover { border-color: var(--accent); }
+.vid-list button[aria-current] { background: var(--accent-soft); color: var(--accent); font-weight: 700; border-color: var(--accent); }
+.vid-list .n { font-family: var(--f-mono); font-size: 0.78rem; color: var(--ink-soft); align-self: center; }
+.vid-list a { font-size: var(--step--1); }
+.lesson-video { margin: 0 0 32px; max-width: 62ch; }
+.lesson-video summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+.lesson-video video { margin: 12px 0 8px; }
+@media (max-height: 700px) { .vid-player { position: static; } }
