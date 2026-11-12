@@ -1910,7 +1910,8 @@ function homeExtras() {
     h('div', { class: 'sec-h' }, h('h2', {}, 'Practicá como en el parcial')),
     h('div', { class: 'howto' },
       [['#/simulacro', 'Simulacro con tiempo', `40 rápidas o 10 de código, sorteadas de ${QUESTIONS.length} preguntas. Al entregar, revisás cada una con su explicación.`],
-       ['#/parciales', 'Modelos de parcial', 'Exámenes completos con el formato del profesor, incluido el 2do parcial reconstruido.'],
+       ['#/diapositivas', 'Práctica por diapositivas', `${window.DIAPOS.BLOQUES.reduce((n, b) => n + b.qs.length, 0)} preguntas sacadas de cada diapositiva de las Unidades IV y V, por bloques.`],
+       ['#/parciales', 'Modelos de parcial','Exámenes completos con el formato del profesor, incluido el 2do parcial reconstruido.'],
        ['#/resumen', 'Resumen para el parcial', 'Los conceptos que tenés que saber sí o sí, en una sola página.'],
        ['#/conceptual', 'Resumen conceptual', 'La teoría de las Unidades IV y V para leer de corrido.'],
        ['#/proyectos', 'Proyectos', 'Del turnero en vanilla al panel admin en React, con requisitos para tildar y pruebas de fuego.'],
@@ -1986,17 +1987,41 @@ function modelView() {
         h('button', { class: 'btn', onclick: () => startPractice(m.qs, 'Práctica: ' + m.name, null, 'parciales') }, 'Practicar con explicación')));
   })));
 }
-function startModel(m) {
+function startModel(m, back = 'parciales') {
   const v = view();
   const box = h('div'); v.append(box);
   // El orden de las preguntas se mantiene como en el examen; las opciones se mezclan solas
-  activeModel = new Quiz(box, { list: m.qs, mode: 'exam', timeMin: m.min, kind: m.name, back: 'parciales', onExit: () => { activeModel = null; go('parciales'); } });
+  activeModel = new Quiz(box, { list: m.qs, mode: 'exam', timeMin: m.min, kind: m.name, back, onExit: () => { activeModel = null; go(back); } });
   document.body.classList.add('exam-on');
   activeModel.start();
   window.scrollTo(0, 0);
 }
 
-const VIEWS = { simulacro: ['Simulacro', simView], proyectos: ['Proyectos', projView], parciales: ['Modelos de parcial', modelView] };
+// Práctica por diapositivas: un bloque por rango de diapositivas (js/diapositivas-u4.js y -u5.js)
+function diapView() {
+  const v = view();
+  const { BLOQUES } = window.DIAPOS;
+  const all = BLOQUES.flatMap(b => b.qs);
+  v.append(h('div', { class: 'sec-h', style: { marginTop: 0 } }, h('h1', { style: { fontSize: 'var(--step-4)', fontWeight: 800 } }, 'Práctica por diapositivas'), h('span', { class: 'muted' }, `${all.length} preguntas · Unidades IV y V`)));
+  v.append(h('p', { style: { marginBottom: '12px', maxWidth: '72ch' } }, 'Cada pregunta sale de una diapositiva concreta (te lo indica la explicación con 📍). Están armadas para que no alcance con reconocer palabras: las opciones incorrectas suelen ser la definición de otro concepto de la misma diapositiva.'));
+  v.append(h('div', { class: 'row', style: { marginBottom: '18px' } },
+    h('button', { class: 'btn primary', onclick: () => startPractice(shuffle(all), 'Todas las diapositivas, mezcladas', null, 'diapositivas') }, `Mezclar todas (${all.length})`),
+    ['IV', 'V'].map(u => { const qs = BLOQUES.filter(b => b.u === u).flatMap(b => b.qs); return h('button', { class: 'btn', onclick: () => startPractice(shuffle(qs), 'Unidad ' + u + ', mezclada', null, 'diapositivas') }, `Solo Unidad ${u} (${qs.length})`); })));
+  ['IV', 'V'].forEach(u => {
+    v.append(h('div', { class: 'sec-h' }, h('h2', {}, 'Unidad ' + u)));
+    v.append(h('div', { class: 'mode-cards' }, BLOQUES.filter(b => b.u === u).map(b => {
+      const last = DB.hist.find(x => x.k === b.name);
+      return h('div', { class: 'mode' },
+        h('h2', { style: { fontSize: '21px' } }, h('span', { class: 'n' }, b.qs.length), ' ' + b.name),
+        h('p', { class: 'muted', style: { fontSize: '14px' } }, `Diapositivas ${b.rango} · ${b.min} min` + (last ? ` · último intento: ${last.ok}/${last.n}` : '')),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn primary', onclick: () => startPractice(shuffle(b.qs), b.name, null, 'diapositivas') }, 'Practicar'),
+          h('button', { class: 'btn', onclick: () => startModel(b, 'diapositivas') }, 'Rendir con tiempo')));
+    })));
+  });
+}
+
+const VIEWS = { simulacro: ['Simulacro', simView], proyectos: ['Proyectos', projView], parciales: ['Modelos de parcial', modelView], diapositivas: ['Práctica por diapositivas', diapView] };
 // Dibuja una vista propia (#/simulacro, #/proyectos); devuelve false si la ruta no es nuestra
 function render(id) {
   const v = VIEWS[id];

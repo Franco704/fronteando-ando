@@ -81,6 +81,7 @@
       <li><a class="toc-link" href="#/resumen" data-id="resumen"><span class="n">≡</span><span>Resumen para el parcial</span></a></li>
       <li><a class="toc-link" href="#/conceptual" data-id="conceptual"><span class="n">¶</span><span>Resumen conceptual</span></a></li>
       <li><a class="toc-link" href="#/videos" data-id="videos"><span class="n">▶</span><span>Videos de resumen</span></a></li>
+      <li><a class="toc-link" href="#/diapositivas" data-id="diapositivas"><span class="n">▤</span><span>Práctica por diapositivas</span></a></li>
       <li><a class="toc-link" href="#/parciales" data-id="parciales"><span class="n">✎</span><span>Modelos de parcial</span></a></li>
       <li><a class="toc-link" href="#/simulacro" data-id="simulacro"><span class="n">✓</span><span>Simulacro de parcial</span></a></li>
       <li><a class="toc-link" href="#/proyectos" data-id="proyectos"><span class="n">★</span><span>Proyectos</span></a></li></ol></section>`;
