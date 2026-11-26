@@ -138,3 +138,7 @@ main:focus { outline: none; }
   .riel a[aria-current] { color: var(--acento); border-left-color: var(--acento); font-weight: 600; }
 }
 
+
+/* Vuelta al hub con las guías de todas las materias */
+.hub { margin-top: auto; padding: 12px 14px; border: 1px solid var(--linea); border-radius: var(--r-2); color: var(--tinta); font-size: .92rem; font-weight: 600; text-decoration: none; }
+.hub:hover { border-color: var(--acento); }
