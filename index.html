@@ -2,65 +2,60 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Fronteando Ando</title>
-  <meta name="description" content="Guía de frontend desde cero: HTML, CSS, JavaScript y React, basada en las Unidades 4 y 5 de Desarrollo de Software." />
+  <meta name="description" content="Guía de frontend desde cero: HTML, CSS, JavaScript y React, basada en las Unidades 4 y 5 de Desarrollo de Software (UTN-FRT)." />
+  <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#14151b" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314151b'/%3E%3Cpath d='M11 9l-6 7 6 7' fill='none' stroke='%23ff8f5e' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M21 9l6 7-6 7' fill='none' stroke='%2350d0e6' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M18 8l-4 16' stroke='%23e9eaf0' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/practica.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,300..1000,0..1,0..1&display=swap" />
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/armazon.css" />
+  <link rel="stylesheet" href="styles/contenido.css" />
+  <link rel="stylesheet" href="styles/editor.css" />
+  <link rel="stylesheet" href="styles/practica.css" />
+  <link rel="stylesheet" href="styles/vistas.css" />
+  <link rel="stylesheet" href="styles/animaciones.css" />
   <script>
-    // Aplicar tema guardado antes de pintar, para evitar parpadeo
+    // Tema guardado antes de pintar, para evitar el parpadeo (misma clave que la versión anterior)
     try { const t = localStorage.getItem('fa-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
+  <script type="module" src="src/main.js"></script>
 </head>
 <body>
-  <a class="skip" href="#lesson">Saltar al contenido</a>
+  <a class="saltar" href="#principal">Saltar al contenido</a>
 
-  <header class="topbar">
-    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false" aria-controls="sidebar">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
-    </button>
-    <a class="brand" href="#/">Fronteando<span class="brand-mark">Ando</span></a>
-    <div class="progress" aria-label="Progreso">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-text" id="progressText">0 de 0</span>
-    </div>
-    <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema claro u oscuro">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
-    </button>
+  <header class="barra">
+    <button class="boton-icono boton-menu" id="botonMenu" type="button" aria-label="Abrir el índice" aria-expanded="false" aria-controls="cajon"></button>
+    <a class="marca" href="#/"><span class="marca-signo" aria-hidden="true">&lt;/&gt;</span>Fronteando Ando</a>
+    <nav class="barra-enlaces" aria-label="Herramientas de estudio" id="barraEnlaces"></nav>
+    <div class="avance" id="avance"></div>
+    <button class="boton-icono" id="botonTema" type="button" aria-label="Cambiar entre tema claro y oscuro"></button>
   </header>
 
-  <div class="layout">
-    <nav class="sidebar" id="sidebar" aria-label="Índice de lecciones">
-      <label class="search">
-        <span class="sr-only">Buscar lección</span>
-        <input type="search" id="search" placeholder="Buscar tema… (ej: flexbox, props)" autocomplete="off" />
+  <div class="marco">
+    <nav class="cajon" id="cajon" aria-label="Índice de la materia">
+      <div class="cajon-cabeza">
+        <p>Índice</p>
+        <button class="boton-icono" id="cerrarCajon" type="button" aria-label="Cerrar el índice"></button>
+      </div>
+      <label class="buscar">
+        <span class="sr-only">Buscar una lección</span>
+        <input type="search" id="buscar" placeholder="Buscar: flexbox, props, fetch…" autocomplete="off" />
       </label>
-      <div id="toc"></div>
+      <ul class="herramientas" id="herramientas"></ul>
+      <div id="indice"></div>
     </nav>
-    <div class="scrim" id="scrim" hidden></div>
-
-    <main id="lesson" tabindex="-1"></main>
+    <div class="velo" id="velo" hidden></div>
+    <main id="principal" tabindex="-1">
+      <noscript><p>Esta guía necesita JavaScript para los laboratorios y las preguntas.</p></noscript>
+    </main>
+    <aside class="riel" id="riel" aria-label="En esta lección"></aside>
   </div>
 
-  <script src="js/content/_helpers.js"></script>
-  <script src="js/content/01-web.js"></script>
-  <script src="js/content/02-html.js"></script>
-  <script src="js/content/03-css.js"></script>
-  <script src="js/content/04a-js.js"></script>
-  <script src="js/content/04b-js.js"></script>
-  <script src="js/content/05-tooling.js"></script>
-  <script src="js/content/06a-react.js"></script>
-  <script src="js/content/06b-react.js"></script>
-  <script src="js/content/resumen.js"></script>
-  <script src="js/content/conceptual.js"></script>
-  <script src="js/practica-datos.js"></script>
-  <script src="js/parciales-datos.js"></script>
-  <script src="js/diapositivas-u4.js"></script>
-  <script src="js/diapositivas-u5.js"></script>
-  <script src="js/practica.js"></script>
-  <script src="js/app.js"></script>
+  <nav class="dock" aria-label="Accesos rápidos" id="dock"></nav>
 </body>
 </html>

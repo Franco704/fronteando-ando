@@ -2,23 +2,51 @@
 
 Guía de frontend desde cero (HTML, CSS, JavaScript y React) basada en las Unidades 4 y 5 de Desarrollo de Software (UTN-FRT).
 
-40 lecciones con teoría, laboratorios en vivo y ejercicios con solución. Sitio estático: se abre con `index.html`.
+40 lecciones con teoría, laboratorios en vivo y ejercicios con solución.
 
 **Sitio publicado:** https://franco704.github.io/fronteando-ando/
 
 Además, integrado del "Laboratorio Frontend DSW":
 
-- 37 laboratorios visuales (event loop paso a paso, métodos de array, especificidad, flexbox, Virtual DOM, ciclo de vida con React real, router con rutas privadas…) dentro de cada lección.
+- 37 laboratorios visuales (event loop paso a paso, métodos de array, especificidad, flexbox, Virtual DOM, ciclo de vida con React real, router con rutas privadas…) dentro de cada lección y todos juntos en `#/laboratorios`.
 - Trampas de parcial por tema y un mini-quiz al final de cada lección.
-- Simulacro (`#/simulacro`): 40 rápidas o 10 de código con tiempo, sorteadas de un banco de 476 preguntas, con revisión y repaso de errores.
-- Modelos de parcial (`#/parciales`): 5 exámenes fijos con el estilo del profesor (multiple choice conceptual + algunas de código), incluido el 2do parcial reconstruido. Datos en `js/parciales-datos.js`; sus preguntas también se suman al banco del simulacro.
-- Resumen para el parcial (`#/resumen`): fichas con los conceptos clave de cada tema (`js/content/resumen.js`).
+- Simulacro (`#/simulacro`): 40 rápidas o 10 de código con tiempo, sorteadas de un banco de 892 preguntas, con revisión. Los errores quedan en `#/repaso` hasta que los aciertes.
+- Modelos de parcial (`#/parciales`): 5 exámenes fijos con el estilo del profesor, incluido el 2do parcial reconstruido.
+- Preguntas de Moyano (`#/moyano`) y práctica por diapositivas (`#/diapositivas`), con sus preguntas sumadas al banco del simulacro.
+- Resumen para el parcial (`#/resumen`) y resumen conceptual (`#/conceptual`).
 - Videos de resumen (`#/videos`): un video por lección (`videos/NN-<id>.mp4`), de corrido y con salto a cada lección; cada lección también tiene el suyo arriba.
 - Proyectos (`#/proyectos`) con requisitos para tildar y pruebas de fuego.
-- Consola JS y playground de React (botón "> Consola").
-- Animaciones: una pantalla de entrada con la trampa típica cada vez que cambiás de tema, y un dibujo animado del tema en la cabecera de cada lección.
+- Consola JS y playground de React (botón "> Consola" en escritorio, o desde el índice).
+- Animaciones: una pantalla de entrada con la trampa típica cada vez que cambiás de tema y un glifo animado del tema en la cabecera de cada lección.
 
-El banco y los proyectos están en `js/practica-datos.js`; el motor en `js/practica.js` y sus estilos en `css/practica.css`.
+## Usarla en tu computadora
+
+No necesita instalación ni compilación: es HTML, CSS y JavaScript con módulos ES. Como los navegadores no cargan módulos desde `file://`, levantá un servidor estático en la carpeta (por ejemplo `python3 -m http.server`) y abrí `http://localhost:8000`. El progreso se guarda en el navegador de cada persona, con las claves de siempre (`fa-done`, `fa-practica` y `fa-theme`).
+
+Pruebas: `npm test` (carga todo el temario, el banco y los exámenes y valida lecciones, laboratorios, preguntas, temas y resúmenes).
+
+## Cómo está organizado
+
+La estructura cuenta de qué trata la materia (arquitectura *screaming*):
+
+```
+index.html              armazón: barra, índice, dock inferior en móvil
+src/main.js             raíz de composición: rutas por hash (#/<lección>, #/resumen, #/videos, #/simulacro, #/repaso…) y vistas
+src/temario/            lecciones por unidad (unidad-iv/: web, HTML, CSS, JavaScript; unidad-v/: entorno moderno y React), catálogo, ayudantes de redacción e índice
+src/banco/              banco de preguntas, temas, trampas de parcial, temas probables y pantallas de entrada
+src/examenes/           modelos de parcial, preguntas de Moyano y práctica por diapositivas (Unidades IV y V)
+src/resumenes/          resumen para el parcial y resumen conceptual
+src/proyectos/          proyectos con requisitos y pruebas de fuego
+src/laboratorios/       editor en vivo (HTML/CSS/JS y React), laboratorios visuales web y React, componentes y carga de React bajo demanda
+src/consola/            consola JS y playground de React
+src/estudio/            progreso, motor de preguntas (práctica y examen) y otras guías
+src/vistas/             inicio, lección, resúmenes, videos, laboratorios y práctica (simulacro, repaso, parciales, Moyano, diapositivas, proyectos)
+src/animaciones/        pantalla de entrada a cada tema y glifo de cada lección
+src/ui/ src/nucleo/     armazón, resaltado de código e íconos; DOM, almacenamiento y rutas
+styles/                 tokens, base, armazón, contenido, editor, práctica, vistas y animaciones
+```
+
+El diseño es *mobile-first*: en el celular todo se alcanza desde el dock inferior (Inicio, Índice, Resumen, Simulacro, Repasar) y el cajón, con el buscador, todas las herramientas y el índice completo; desde 1024 px el índice queda fijo y las herramientas principales pasan a la barra superior, y desde 1280 px aparece el riel con las secciones de la lección. La portada abre con un panel Estilos como el de DevTools: varias reglas compiten por el título de la página, la especificidad la calcula la función del laboratorio de especificidad y el navegador aplica la cascada de verdad. Una sola tipografía, Recursive, usada con sus ejes: Sans para leer, más peso para títulos y MONO para el código, con los colores del panel Elementos. El color de acento marca la unidad: naranja de HTML la IV, cian de React la V.
 
 ## También probá
 

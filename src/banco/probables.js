@@ -1,0 +1,25 @@
+/* Lo más probable que tomen (estimación a partir de las diapositivas y del 1er parcial). lvl: 1 puede salir, 2 probable, 3 muy probable.
+   Generado a partir del "Laboratorio Frontend DSW" (Mateo Rusconi). */
+export const HOT = [
+  {"txt":"useState: re-render, valor viejo en el handler y setX(x => x + 1)","mod":"estado","lvl":3},
+  {"txt":"useEffect: [] vs [dep] vs sin array, cleanup y orden render → efecto","mod":"efectos","lvl":3},
+  {"txt":"JSX vs HTML: className, htmlFor, un solo elemento raíz, keys","mod":"jsx","lvl":3},
+  {"txt":"Router: Link vs a, NavLink, useNavigate, Outlet, ProtectedRoute","mod":"router","lvl":3},
+  {"txt":"Controlados vs no controlados y react-hook-form (register, errors)","mod":"rforms","lvl":2},
+  {"txt":"Virtual DOM y reconciliación","mod":"jsx","lvl":2},
+  {"txt":"Atomic Design y Screaming Architecture","mod":"arq","lvl":2},
+  {"txt":"Tailwind mobile-first: qué aplica en cada ancho","mod":"tw","lvl":2},
+  {"txt":"package.json, dependencies vs devDependencies, ^ y ~","mod":"entorno","lvl":2},
+  {"txt":"Orden de ejecución: sincrónico → microtareas → macrotareas","mod":"async","lvl":3},
+  {"txt":"var / let / const: scope, hoisting y TDZ","mod":"js","lvl":3},
+  {"txt":"Qué devuelve cada método de array (push, map, find, forEach...)","mod":"arr","lvl":3},
+  {"txt":"Especificidad y cascada: ¿qué regla gana?","mod":"css","lvl":3},
+  {"txt":"function vs arrow: this, new, arguments","mod":"obj","lvl":3},
+  {"txt":"fetch, res.json(), async/await y res.ok","mod":"async","lvl":2},
+  {"txt":"localStorage vs sessionStorage vs cookies; JSON.stringify","mod":"store","lvl":2},
+  {"txt":"DOM: querySelector, createElement, appendChild, preventDefault","mod":"dom","lvl":2},
+  {"txt":"Flexbox vs Grid, ejes y media queries","mod":"layout","lvl":2},
+  {"txt":"Motores: V8, SpiderMonkey, Blink, Gecko, WebKit","mod":"js","lvl":2},
+  {"txt":"Tipos de renderizado: SSR, CSR, SPA, PWA, SSG","mod":"web","lvl":1},
+  {"txt":"Etiquetas semánticas y formularios","mod":"html","lvl":1},
+];

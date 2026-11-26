@@ -1,0 +1,72 @@
+/* Fronteando Ando: la guía se ve como un inspector del navegador. Página clara, código con los colores del panel
+   Elementos de DevTools y la cascada a la vista en la portada.
+   El color solo codifica información: uno por unidad (naranja de HTML la Unidad IV, cian de React la Unidad V),
+   verde y rojo para lo correcto y lo incorrecto y, en el código, uno por tipo de token.
+   Una sola familia, Recursive, con sus ejes como roles: Sans Linear para leer, más peso para títulos y MONO 1 para el código. */
+:root {
+  --fondo: #fbfbfd;
+  --superficie: #f3f4f8;
+  --superficie-2: #e8eaf0;
+  --tinta: #191b23;
+  --tinta-2: #3a3d4a;
+  --tenue: #5c6070;
+  --linea: #dcdfe7;
+  --ok: #157347; --ok-suave: #ddf1e5;
+  --aviso: #8a5a00; --aviso-suave: #f7ecd2;
+  --error: #b4232a; --error-suave: #fbe5e5;
+  --sobre-acento: #fff;
+
+  /* Código: los colores del panel Elementos en tema claro */
+  --codigo-fondo: #f4f5f9; --codigo-tinta: #1f2330; --codigo-linea: #dfe2ea;
+  --tok-c: #6a7282; --tok-s: #b3261e; --tok-k: #1f4fd1; --tok-t: #881280; --tok-n: #08784f; --tok-a: #994500;
+
+  /* Unidades */
+  --u4: #c2410c; --u4-suave: #fde9de;
+  --u5: #0d6e86; --u5-suave: #dcf1f6;
+  --acento: var(--u4); --acento-suave: var(--u4-suave);
+
+  --f-texto: 'Recursive', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-ui: var(--f-texto);
+  --f-mono: 'Recursive', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Escala 1.2 sobre 17 px */
+  --t--1: .85rem; --t-0: 1.0625rem; --t-1: 1.275rem; --t-2: 1.53rem; --t-3: 1.84rem; --t-4: clamp(2rem, 1.5rem + 2.4vw, 2.9rem); --t-5: clamp(2.6rem, 1.4rem + 5.4vw, 5rem);
+  --e-1: .25rem; --e-2: .5rem; --e-3: .75rem; --e-4: 1rem; --e-5: 1.5rem; --e-6: 2rem; --e-7: 3rem; --e-8: 4.5rem;
+  --r-1: 4px; --r-2: 8px; --r-3: 12px;
+  --sombra: 0 1px 0 rgba(25, 27, 35, .04), 0 16px 32px -22px rgba(25, 27, 35, .5);
+  --barra: 56px;
+  --dock: 64px;
+  --lateral: 300px;
+  --margen: 16px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --fondo: #14151b; --superficie: #1b1d25; --superficie-2: #262935; --tinta: #e9eaf0; --tinta-2: #c7c9d4; --tenue: #9a9eae; --linea: #2e313e;
+    --ok: #55c98a; --ok-suave: #142a1f; --aviso: #eab357; --aviso-suave: #2e2512; --error: #ff8a84; --error-suave: #361a1a;
+    --sobre-acento: #14151b;
+    --codigo-fondo: #1c1e27; --codigo-tinta: #dfe2ea; --codigo-linea: #2b2e3b;
+    --tok-c: #8a91a3; --tok-s: #f2a37b; --tok-k: #8fb2ff; --tok-t: #e48ad8; --tok-n: #7fdcae; --tok-a: #e8bf7a;
+    --u4: #ff8f5e; --u4-suave: #3a2016; --u5: #50d0e6; --u5-suave: #0f2c33;
+    --sombra: 0 1px 0 rgba(0, 0, 0, .3), 0 16px 32px -20px rgba(0, 0, 0, .85);
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --fondo: #14151b; --superficie: #1b1d25; --superficie-2: #262935; --tinta: #e9eaf0; --tinta-2: #c7c9d4; --tenue: #9a9eae; --linea: #2e313e;
+  --ok: #55c98a; --ok-suave: #142a1f; --aviso: #eab357; --aviso-suave: #2e2512; --error: #ff8a84; --error-suave: #361a1a;
+  --sobre-acento: #14151b;
+  --codigo-fondo: #1c1e27; --codigo-tinta: #dfe2ea; --codigo-linea: #2b2e3b;
+  --tok-c: #8a91a3; --tok-s: #f2a37b; --tok-k: #8fb2ff; --tok-t: #e48ad8; --tok-n: #7fdcae; --tok-a: #e8bf7a;
+  --u4: #ff8f5e; --u4-suave: #3a2016; --u5: #50d0e6; --u5-suave: #0f2c33;
+  --sombra: 0 1px 0 rgba(0, 0, 0, .3), 0 16px 32px -20px rgba(0, 0, 0, .85);
+  color-scheme: dark;
+}
+
+/* El acento sigue a la unidad: la de la página (body) o la de cada bloque (data-u) */
+body[data-unit='u5'], [data-u='u5'] { --acento: var(--u5); --acento-suave: var(--u5-suave); }
+[data-u='u4'] { --acento: var(--u4); --acento-suave: var(--u4-suave); }
+
+@media (min-width: 768px) { :root { --margen: 32px; } }
+@media (min-width: 1024px) { :root { --margen: 48px; } }

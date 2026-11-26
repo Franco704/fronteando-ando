@@ -1,0 +1,119 @@
+/* Contenido de las lecciones: texto, código con resaltado, tablas, notas y pasos; después, laboratorios visuales,
+   ejercicios, autoevaluación, bibliografía y navegación. */
+.lesson { max-width: 46rem; margin: 0 auto; overflow-wrap: break-word; }
+.lesson.wide { max-width: 72rem; }
+.crumb { font-size: .88rem; font-weight: 500; color: var(--tenue); margin: 0 0 10px; }
+.crumb a { color: inherit; }
+.lesson h1 { font-weight: 800; font-size: var(--t-4); line-height: 1.08; letter-spacing: -.025em; margin: 0 0 14px; text-wrap: balance; }
+.lesson h2 { font-weight: 760; font-size: var(--t-2); line-height: 1.22; letter-spacing: -.015em; margin: 2.4em 0 .6em; text-wrap: balance; }
+.lesson h3 { font-weight: 720; font-size: 1.14rem; line-height: 1.35; margin: 1.8em 0 .5em; }
+.lesson h4 { font-weight: 680; font-size: 1rem; margin: 1.5em 0 .4em; }
+.lesson p, .lesson li { max-width: 68ch; }
+.lesson p { margin: 0 0 1em; }
+.lesson ul, .lesson ol { padding-left: 1.3em; margin: 0 0 1.1em; }
+.lesson li { margin: .3em 0; }
+.lesson li::marker { color: var(--tenue); }
+.tldr { font-size: 1.18rem; line-height: 1.58; color: var(--tinta-2); margin: 0 0 24px; max-width: 62ch; }
+.k { font-weight: 650; background: linear-gradient(transparent 58%, var(--acento-suave) 58%); }
+.goals { border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); padding: 14px 0 6px; margin: 0 0 8px; }
+.goals p { font-weight: 700; font-size: .92rem; margin: 0 0 6px; }
+.goals ul { margin: 0 0 8px; padding-left: 1.2em; font-size: .97rem; line-height: 1.55; }
+.body > :first-child { margin-top: 1.6em; }
+
+/* Cabecera: unidad, tema, glifo animado del tema y posición */
+.lesson-head { display: grid; grid-template-columns: minmax(0, 1fr); }
+.lesson-head .crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.chip-unidad { display: inline-block; padding: 1px 10px; border-radius: 99px; font-size: .76rem; line-height: 1.7; font-weight: 650; background: var(--acento); color: var(--sobre-acento); }
+.lesson-pos { margin: 0 0 var(--e-5); font-size: .86rem; font-weight: 500; color: var(--tenue); }
+.lesson-head .lesson-glyph { display: none; }
+@media (min-width: 720px) {
+  .lesson-head { grid-template-columns: minmax(0, 1fr) 150px; column-gap: var(--e-5); }
+  .lesson-head .crumb, .lesson-head h1, .lesson-pos { grid-column: 1; }
+  .lesson-head .lesson-glyph { display: block; grid-column: 2; grid-row: 1 / span 3; align-self: center; width: 150px; height: 120px; }
+}
+
+/* Video de resumen */
+.lesson-video { margin: 0 0 22px; }
+.lesson-video > summary { cursor: pointer; width: fit-content; min-height: 44px; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: .95rem; color: var(--acento); }
+.lesson-video video { display: block; width: 100%; margin: 6px 0 8px; border-radius: var(--r-2); background: #000; aspect-ratio: 16 / 9; }
+.lesson-video a { font-size: .9rem; }
+
+/* Código */
+pre.code {
+  position: relative; margin: 0 0 1.4em; padding: 16px 18px; overflow-x: auto;
+  background: var(--codigo-fondo); color: var(--codigo-tinta); border: 1px solid var(--codigo-linea); border-radius: var(--r-2);
+  font-family: var(--f-mono); font-size: .84rem; line-height: 1.65; tab-size: 2; -webkit-text-size-adjust: none;
+}
+pre.code[data-lang]::before { content: attr(data-lang); position: absolute; top: 6px; right: 12px; font-size: .7rem; color: var(--tok-c); }
+pre.code[data-lang] { padding-top: 28px; }
+.sol-name { font-family: var(--f-mono); font-variation-settings: 'MONO' 1; font-weight: 600; font-size: .8rem; color: var(--tenue); margin: 0 0 6px !important; }
+.copy-btn {
+  position: absolute; bottom: 8px; right: 8px; min-height: 32px; font-size: .74rem; font-weight: 600; color: var(--tenue); background: var(--fondo);
+  border: 1px solid var(--linea); border-radius: 6px; padding: 4px 9px; cursor: pointer; opacity: 0; transition: opacity .15s;
+}
+pre.code:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+.tok-c { color: var(--tok-c); font-style: italic; }
+.tok-s { color: var(--tok-s); }
+.tok-k { color: var(--tok-k); font-weight: 600; }
+.tok-t { color: var(--tok-t); }
+.tok-n { color: var(--tok-n); }
+.tok-a { color: var(--tok-a); }
+
+/* Tablas */
+.table-wrap { overflow-x: auto; margin: 0 0 1.5em; border: 1px solid var(--linea); border-radius: var(--r-2); background: var(--fondo); }
+table { border-collapse: collapse; width: 100%; font-size: .93rem; line-height: 1.5; }
+th, td { text-align: left; padding: 10px 14px; vertical-align: top; border-bottom: 1px solid var(--linea); }
+th { font-weight: 700; background: var(--superficie); color: var(--tinta); }
+tr:last-child td { border-bottom: 0; }
+td code { font-size: .82em; }
+
+/* Notas */
+.note { font-size: .97rem; line-height: 1.6; margin: 0 0 1.5em; padding: 14px 18px; border-radius: var(--r-2); background: var(--superficie); border-left: 3px solid var(--tenue); }
+.note p { margin: 0 !important; }
+.note.warn { border-left-color: var(--aviso); background: var(--aviso-suave); }
+.note.tip { border-left-color: var(--ok); }
+
+/* Pasos en secuencia (flow): etiquetas unidas por flechas */
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; margin: 0 0 1.5em; font-size: .88rem; line-height: 1.35; font-weight: 550; }
+.flow span { padding: 5px 10px; border-radius: var(--r-2); background: var(--superficie); border: 1px solid var(--linea); }
+.flow i { font-style: normal; color: var(--tenue); }
+
+/* ---------- Secciones finales ---------- */
+.sec-lede { font-size: .97rem; color: var(--tenue); }
+.visuales > h2, .practice > h2, .sources > h2 { padding-top: .4em; border-top: 1px solid var(--linea); }
+.done-row { margin: 56px 0 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.kbd-hint { font-size: .86rem; color: var(--tenue); }
+@media (hover: none) { .done-row .kbd-hint { display: none; } }
+.pager { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.pager a { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; min-height: 44px; border: 1px solid var(--linea); border-radius: var(--r-2); background: var(--superficie); text-decoration: none; color: var(--tinta); }
+.pager a:hover { border-color: var(--acento); }
+.pager small { color: var(--tenue); font-size: .8rem; }
+.pager strong { font-weight: 650; font-size: .97rem; line-height: 1.35; }
+.pager .next { text-align: right; }
+@media (min-width: 560px) { .pager { grid-template-columns: 1fr 1fr; } .pager .next { grid-column: 2; } }
+
+/* Ejercicios: los de la cátedra llevan el borde de la unidad */
+.exercise { margin: 0 0 20px; padding: 20px 22px; background: var(--fondo); border: 1px solid var(--linea); border-radius: var(--r-2); }
+.exercise.official { border-left: 3px solid var(--acento); }
+.ex-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: .8rem; font-weight: 650; }
+.ex-tag { color: var(--acento); }
+.ex-level { color: var(--tenue); padding: 1px 8px; border: 1px solid var(--linea); border-radius: 99px; font-weight: 500; }
+.exercise h3 { margin: 8px 0 10px !important; }
+.ex-prompt > :last-child { margin-bottom: 0; }
+details.hint, details.solution { margin-top: 14px; }
+details.hint > summary, details.solution > summary { cursor: pointer; font-weight: 650; font-size: .93rem; color: var(--acento); width: fit-content; min-height: 44px; display: flex; align-items: center; }
+details.hint ul { margin: 4px 0 0; font-size: .95rem; }
+.sol-body { margin-top: 6px; padding-top: 14px; border-top: 1px dashed var(--linea); }
+.sol-file { margin-top: 12px; }
+.sol-lab { margin-top: 12px; }
+
+/* Bibliografía */
+.source { border: 1px solid var(--linea); border-radius: var(--r-2); background: var(--fondo); margin-bottom: 10px; }
+.source > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 16px; min-height: 44px; font-weight: 600; font-size: .95rem; }
+.source > summary::-webkit-details-marker { display: none; }
+.source .host { color: var(--tenue); font-weight: 400; font-size: .84rem; text-align: right; overflow-wrap: anywhere; }
+.source-body { padding: 0 16px 12px; font-size: .94rem; line-height: 1.55; }
+.source-body ul { padding-left: 1.2em; }
+
+@media (max-width: 720px) { pre.code { font-size: .8rem; padding: 26px 14px 14px; } }

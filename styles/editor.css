@@ -1,0 +1,28 @@
+/* Laboratorio con editor en vivo: pestañas de archivos, textarea con el código y el resultado en un iframe. */
+.lab { margin: 28px 0 12px; border: 1px solid var(--linea); border-radius: var(--r-3); background: var(--fondo); overflow: hidden; }
+.lab-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px 8px 14px; border-bottom: 1px solid var(--linea); background: var(--superficie); }
+.lab-title { font-weight: 700; margin-right: auto; font-size: .95rem; line-height: 1.3; }
+.lab-tabs { display: flex; gap: 4px; }
+.lab-tab, .lab-btn {
+  min-height: 36px; font-size: .84rem; font-weight: 600; cursor: pointer; padding: 5px 12px;
+  border-radius: var(--r-2); border: 1px solid var(--linea); background: var(--fondo); color: var(--tinta-2);
+}
+.lab-tab { font-variation-settings: 'MONO' 1; }
+.lab-tab[aria-selected='true'] { background: var(--tinta); color: var(--fondo); border-color: var(--tinta); }
+.lab-btn:hover, .lab-tab:hover { border-color: var(--tenue); }
+.lab-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+.lab-editor { display: flex; background: var(--codigo-fondo); }
+.lab-editor textarea {
+  display: block; flex: 1; width: 100%; min-height: 260px; resize: vertical; padding: 14px 16px; border: 0; outline: none;
+  background: transparent; color: var(--codigo-tinta); font-family: var(--f-mono); font-size: .84rem; line-height: 1.6; tab-size: 2; white-space: pre;
+}
+.lab-editor textarea:focus-visible { box-shadow: inset 0 0 0 2px var(--acento); }
+.lab-editor textarea[hidden] { display: none; }
+/* El resultado es una página aparte: fondo blanco en los dos temas */
+.lab-preview { background: #fff; border-top: 1px solid var(--linea); }
+.lab-preview iframe { display: block; width: 100%; height: 100%; min-height: 280px; border: 0; }
+.lab-hint { margin: 0 !important; max-width: none !important; padding: 8px 14px; font-size: .86rem; color: var(--tenue); border-top: 1px solid var(--linea); }
+@media (min-width: 900px) {
+  .lab-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 320px; }
+  .lab-preview { border-top: 0; border-left: 1px solid var(--linea); }
+}

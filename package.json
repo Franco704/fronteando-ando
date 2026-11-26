@@ -1,0 +1,6 @@
+{
+  "name": "fronteando-ando",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node tests/contenido.test.js" }
+}
