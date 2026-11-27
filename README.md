@@ -64,7 +64,7 @@ El diseño es *mobile-first*: en el celular todo se alcanza desde el dock inferi
 - [Iterando Ando](https://franco704.github.io/iterando-ando/): Matemática Superior ([repositorio](https://github.com/Franco704/iterando-ando))
 - [Modulando Ando](https://franco704.github.io/modulando-ando/): Comunicación de Datos ([repositorio](https://github.com/Franco704/modulando-ando))
 - [Probando Ando](https://franco704.github.io/probando-ando/): Probabilidad y Estadística ([repositorio](https://github.com/Franco704/probando-ando))
-- [Economizar](https://franco704.github.io/economizar/): Economía ([repositorio](https://github.com/Franco704/economizar))
+- [Economizando Ando](https://franco704.github.io/economizando-ando/): Economía ([repositorio](https://github.com/Franco704/economizando-ando))
 
 ## Agradecimientos
 

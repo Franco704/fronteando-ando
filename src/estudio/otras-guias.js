@@ -12,6 +12,6 @@ export const OTRAS_GUIAS = [
     ['Iterando Ando', 'Matemática Superior: Laplace, métodos numéricos, Fourier', 'iterando-ando'],
     ['Modulando Ando', 'Comunicación de Datos: señales, Shannon, errores, modulación', 'modulando-ando'],
     ['Probando Ando', 'Probabilidad y Estadística: Bayes, distribuciones, intervalos, tests', 'probando-ando'],
-    ['Economizar', 'Economía: micro y macro con gráficas', 'economizar'],
+    ['Economizando Ando', 'Economía: micro y macro con gráficas', 'economizando-ando'],
   ] },
 ];
